@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MRTX VISUAL — Portafolio Creativo</title>
+  <meta name="description" content="Portafolio creativo con estética urbana, minimalista y toques de neón. Fotografía y edición visual." />
+
+  <!-- Tipografías -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0b0e;
+      --surface:#121218;
+      --text:#f2f2f2;
+      --muted:#9aa0a6;
+      --neon1:#7aa3ff;
+      --neon2:#ff6b6b;
+      --neon3:#b066ff;
+      --accent:#ffffff;
+      --radius:22px;
+      --shadow:0 10px 40px rgba(0,0,0,.45);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--text); background:var(--bg);
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      line-height:1.6; overflow-x:hidden;
+    }
+
+    /* Text utilities */
+    h1,h2,h3{font-family:Montserrat, Inter, sans-serif; margin:0 0 .6rem}
+    h1{font-weight:800; letter-spacing:.02em; font-size: clamp(2.5rem, 6vw, 6rem)}
+    h2{font-weight:800; font-size: clamp(1.4rem, 3vw, 2.2rem)}
+    .sub{font-family:Montserrat; font-weight:300; letter-spacing:.25em; text-transform:uppercase; color:var(--muted)}
+    p{margin:0 0 1rem}
+    a{color:inherit; text-decoration:none}
+
+    /* Header */
+    header{
+      position:fixed; inset:0 0 auto 0; height:70px; display:flex; align-items:center; justify-content:center;
+      z-index:50; backdrop-filter:saturate(130%) blur(8px);
+      background:linear-gradient(to bottom, rgba(10,10,15,.55), rgba(10,10,15,.15));
+      border-bottom:1px solid rgba(255,255,255,.05);
+    }
+    .wrap{width:min(1200px, 92vw); margin:0 auto}
+    .nav{display:flex; align-items:center; justify-content:space-between}
+    .brand{display:flex; align-items:baseline; gap:.6rem}
+    .brand b{font-family:Montserrat; font-weight:800; letter-spacing:.1em}
+    .brand .tag{font-size:.8rem; color:var(--muted); letter-spacing:.18em}
+    .menu{display:flex; gap:1rem}
+    .menu a{padding:.55rem .9rem; border-radius:10px; color:#dfe3ea}
+    .menu a:hover{background:rgba(255,255,255,.06)}
+
+    /* Hero */
+    .hero{position:relative; padding-top:120px;}
+    .hero .inner{display:grid; grid-template-columns: 1.2fr .8fr; gap:2rem; align-items:end; padding: 4rem 0 3rem}
+    .hero .title{line-height:.9}
+    .hero p{font-size: clamp(.95rem, 1.4vw, 1.1rem); color:#cfd4da}
+
+    /* Portrait */
+    .portrait{
+      position:relative; aspect-ratio:3/4; border-radius:var(--radius);
+      overflow:hidden; background:#0e0e12; box-shadow: var(--shadow);
+      border:1px solid rgba(255,255,255,.06);
+    }
+    .portrait::before{ /* simulated B/N photo bg */
+      content:""; position:absolute; inset:0; background:
+        radial-gradient(120% 120% at 70% 0%, rgba(255,255,255,.06), transparent 50%),
+        url('https://images.unsplash.com/photo-1519400197429-404ae1a1e184?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
+      filter:grayscale(100%) contrast(115%);
+      transform:scale(1.04);
+    }
+    .portrait::after{ /* light scratch */
+      content:""; position:absolute; inset:-2px; background:
+        linear-gradient(115deg, transparent 0 40%, rgba(255,255,255,.06) 43%, transparent 47% 100%);
+      mix-blend-mode:screen; opacity:.35;
+    }
+
+    /* Neon ribbons */
+    .ribbon{position:absolute; pointer-events:none; filter:blur(1px) saturate(120%);
+      background: linear-gradient(90deg, var(--neon2), var(--neon1), var(--neon3), var(--neon2));
+      height:10px; border-radius:40px; box-shadow:0 0 25px rgba(124,167,255,.55), 0 0 45px rgba(255,107,107,.35);
+      opacity:.9; transform-origin:left center; animation: flow 12s linear infinite;
+    }
+    .r1{top:8%; left:-10%; width:70%; transform:rotate(12deg)}
+    .r2{top:22%; right:-12%; width:65%; transform:rotate(-16deg); animation-duration:14s}
+    .r3{bottom:12%; left:-5%; width:60%; transform:rotate(18deg); animation-duration:16s}
+    @keyframes flow{to{background-position:200% 0}}
+
+    /* Glass cards */
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:var(--radius); padding:1.4rem; box-shadow:var(--shadow);
+    }
+
+    /* Sections */
+    section{padding:4rem 0}
+    .grid{display:grid; gap:1.2rem}
+    .cols-3{grid-template-columns:repeat(3, 1fr)}
+    .cols-2{grid-template-columns:repeat(2, 1fr)}
+
+    /* About */
+    .about p{font-size:1.05rem; color:#d6d9df}
+
+    /* Services */
+    .svc{display:flex; gap:1rem; align-items:flex-start}
+    .svc svg{flex:0 0 36px}
+
+    /* Portfolio */
+    .portfolio .grid{grid-template-columns:repeat(2,1fr)}
+    @media(min-width:820px){.portfolio .grid{grid-template-columns:repeat(3,1fr)}}
+    .shot{position:relative; aspect-ratio:4/5; border-radius:18px; overflow:hidden; cursor:pointer;
+      border:1px solid rgba(255,255,255,.08); transition:transform .45s ease, box-shadow .45s ease;}
+    .shot img{width:100%; height:100%; object-fit:cover; filter:grayscale(10%); transform:scale(1.02); transition:transform .6s ease, filter .6s ease}
+    .shot:hover{transform:translateY(-6px); box-shadow:0 15px 45px rgba(0,0,0,.45)}
+    .shot:hover img{transform:scale(1.08); filter:grayscale(0%)}
+
+    /* Lightbox */
+    .lightbox{position:fixed; inset:0; background:rgba(4,4,8,.85); display:none; place-items:center; z-index:100}
+    .lightbox.open{display:grid}
+    .lightbox img{max-width:min(92vw,1200px); max-height:86vh; border-radius:16px; box-shadow:0 25px 70px rgba(0,0,0,.6)}
+
+    /* Contact */
+    form{display:grid; gap:1rem}
+    .field{display:grid}
+    input, textarea{background:#0f0f14; border:1px solid rgba(255,255,255,.08); color:var(--text); padding:14px 16px; border-radius:14px; font:inherit}
+    textarea{min-height:130px; resize:vertical}
+    button{
+      appearance:none; border:0; border-radius:16px; padding:14px 20px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; cursor:pointer;
+      background: radial-gradient(60% 140% at 30% 20%, var(--neon1), transparent 40%),
+                 radial-gradient(80% 140% at 75% 40%, var(--neon2), transparent 45%),
+                 linear-gradient(0deg, #1a1a22, #1a1a22);
+      color:#fff; box-shadow:0 10px 30px rgba(122,163,255,.25), inset 0 0 0 1px rgba(255,255,255,.08);
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    button:hover{transform:translateY(-2px); box-shadow:0 16px 40px rgba(122,163,255,.35)}
+
+    /* Reveal on scroll */
+    .reveal{opacity:0; transform:translateY(20px); transition:opacity .8s ease, transform .8s ease}
+    .reveal.show{opacity:1; transform:none}
+
+    /* Footer */
+    footer{padding:2.5rem 0; color:#b6bcc6; border-top:1px solid rgba(255,255,255,.06)}
+
+    /* Responsive */
+    @media(max-width:960px){
+      .hero .inner{grid-template-columns:1fr; align-items:center}
+      .portrait{order:-1; max-width:520px; margin:0 auto}
+    }
+
+    /* Motion preference */
+    @media (prefers-reduced-motion: reduce){
+      .ribbon, .shot, .reveal, button{animation:none; transition:none}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <b>MRTX&nbsp;VISUAL</b>
+        <span class="tag">PORTAFOLIO CREATIVO</span>
+      </div>
+      <nav class="menu" aria-label="principal">
+        <a href="#sobre">Sobre mí</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#portafolio">Portafolio</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" aria-label="portada">
+    <span class="ribbon r1"></span>
+    <span class="ribbon r2"></span>
+    <span class="ribbon r3"></span>
+
+    <div class="wrap inner">
+      <div>
+        <h1 class="title">MRTX<br/>VISUAL</h1>
+        <div class="sub">Portafolio creativo</div>
+        <p style="max-width:58ch; margin-top:1rem">Estética urbana + toques de neón. Fotografía y edición con enfoque en actitud, energía y momentos auténticos. Scroll para ver trabajos, servicios y contacto.</p>
+      </div>
+      <figure class="portrait" aria-label="Retrato urbano en blanco y negro"></figure>
+    </div>
+  </section>
+
+  <!-- Sobre mí -->
+  <section id="sobre" class="about">
+    <div class="wrap grid cols-2">
+      <div class="card reveal">
+        <h2>Sobre mí</h2>
+        <p style="margin-top:.4rem">Me gusta capturar la <b>vibra urbana</b>, las <b>actitudes reales</b> y esos momentos que dicen más que una pose perfecta. Busco transmitir la <b>esencia de cada persona</b>, pero siempre con un toque <b>urbano y diferente</b>.</p>
+      </div>
+      <div class="card reveal">
+        <h2>Enfoque</h2>
+        <p style="margin-top:.4rem">Trabajo con luz natural y composiciones dinámicas. Edición con contraste marcado y luces de color sutiles para un look moderno, nítido y con carácter.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios -->
+  <section id="servicios">
+    <div class="wrap">
+      <h2 class="reveal">Servicios</h2>
+      <div class="grid cols-3" style="margin-top:1.2rem">
+        <div class="card reveal svc">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 7h4l2-2h4l2 2h4v12H4V7zm8 3a4 4 0 100 8 4 4 0 000-8z" stroke="currentColor" stroke-width="1.2"/></svg>
+          <div>
+            <h3>Fotografía urbana</h3>
+            <p>Retratos con actitud, escenarios callejeros y luz ambiente. Ideal para artistas, marcas y perfiles personales.</p>
+          </div>
+        </div>
+        <div class="card reveal svc">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 5h18v14H3V5zm3 3h12v8H6V8z" stroke="currentColor" stroke-width="1.2"/></svg>
+          <div>
+            <h3>Edición y retoque</h3>
+            <p>Color grading con toques de neón, contraste fuerte y piel natural. Entrega optimizada para redes.</p>
+          </div>
+        </div>
+        <div class="card reveal svc">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 4h6v6H4V4zm10 0h6v6h-6V4zM4 14h6v6H4v-6zm10 0h6v6h-6v-6z" stroke="currentColor" stroke-width="1.2"/></svg>
+          <div>
+            <h3>Dirección creativa</h3>
+            <p>Concepto visual, referencias, vestuario y locaciones para sesiones con narrativa y estilo propio.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portafolio -->
+  <section id="portafolio" class="portfolio">
+    <div class="wrap">
+      <h2 class="reveal">Portafolio</h2>
+      <div class="grid" style="margin-top:1.2rem">
+        <!-- Reemplaza las imágenes por las tuyas -->
+        <a class="shot reveal" href="#" data-src="https://images.unsplash.com/photo-1520975867597-0f5f4f87a8d4?q=80&w=1200&auto=format&fit=crop"><img alt="Foto 1" src="https://images.unsplash.com/photo-1520975867597-0f5f4f87a8d4?q=80&w=600&auto=format&fit=crop"></a>
+        <a class="shot reveal" href="#" data-src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=80&w=1200&auto=format&fit=crop"><img alt="Foto 2" src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=80&w=600&auto=format&fit=crop"></a>
+        <a class="shot reveal" href="#" data-src="https://images.unsplash.com/photo-1508898578281-774ac4893bd0?q=80&w=1200&auto=format&fit=crop"><img alt="Foto 3" src="https://images.unsplash.com/photo-1508898578281-774ac4893bd0?q=80&w=600&auto=format&fit=crop"></a>
+        <a class="shot reveal" href="#" data-src="https://images.unsplash.com/photo-1519400197429-404ae1a1e184?q=80&w=1200&auto=format&fit=crop"><img alt="Foto 4" src="https://images.unsplash.com/photo-1519400197429-404ae1a1e184?q=80&w=600&auto=format&fit=crop"></a>
+        <a class="shot reveal" href="#" data-src="https://images.unsplash.com/photo-1517999179347-3e64b54d7a5d?q=80&w=1200&auto=format&fit=crop"><img alt="Foto 5" src="https://images.unsplash.com/photo-1517999179347-3e64b54d7a5d?q=80&w=600&auto=format&fit=crop"></a>
+        <a class="shot reveal" href="#" data-src="https://images.unsplash.com/photo-1521336575822-6da63fb45455?q=80&w=1200&auto=format&fit=crop"><img alt="Foto 6" src="https://images.unsplash.com/photo-1521336575822-6da63fb45455?q=80&w=600&auto=format&fit=crop"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto">
+    <div class="wrap grid cols-2">
+      <div class="card reveal">
+        <h2>Contacto</h2>
+        <p style="margin:.4rem 0 1rem">¿Tienes una idea o proyecto? Hablemos.</p>
+        <form name="contacto" onsubmit="event.preventDefault(); window.location = 'mailto:imanolborjas158@gmail.com?subject=Nuevo%20proyecto%20—%20MRTX%20VISUAL&body=' + encodeURIComponent(document.getElementById('msg').value);">
+          <div class="field"><label for="nombre">Nombre</label><input id="nombre" required placeholder="Tu nombre"/></div>
+          <div class="field"><label for="email">Email</label><input id="email" type="email" required placeholder="tunombre@mail.com"/></div>
+          <div class="field"><label for="msg">Mensaje</label><textarea id="msg" placeholder="Cuéntame sobre tu idea…"></textarea></div>
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
+      <div class="card reveal">
+        <h2>Redes</h2>
+        <p>Instagram: <a href="#">@mrtxvisual</a><br> Email: <a href="mailto:tuemail@ejemplo.com">imanolborjas158@gmail.com</a></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">© <span id="year"></span> MRTX VISUAL — Hecho con actitud y neón.</div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Imagen en pantalla completa">
+    <img alt="preview" src="" />
+  </div>
+
+  <script>
+    // Año en footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
+    },{threshold:.15});
+    revealEls.forEach(el=>io.observe(el));
+
+    // Lightbox gallery
+    const lb = document.getElementById('lightbox');
+    document.querySelectorAll('.shot').forEach(a=>{
+      a.addEventListener('click', (ev)=>{
+        ev.preventDefault();
+        lb.querySelector('img').src = a.dataset.src || a.querySelector('img').src;
+        lb.classList.add('open');
+      });
+    });
+    lb.addEventListener('click', ()=> lb.classList.remove('open'));
+
+    // Subtle parallax for ribbons
+    const ribbons = document.querySelectorAll('.ribbon');
+    window.addEventListener('scroll', ()=>{
+      const y = window.scrollY * 0.06;
+      ribbons.forEach((r,i)=>{ r.style.transform = `translateY(${y*(i+1)}px) rotate(${i%2? -16: 12 + i*2}deg)`; });
+    }, {passive:true});
+  </script>
+</body>
+</html>
